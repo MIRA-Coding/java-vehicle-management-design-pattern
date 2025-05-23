@@ -11,6 +11,9 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.inceptionYear>2025</project.inceptionYear>
+        <project.organizationName>Amera Mohsen</project.organizationName>
+        <project.licenseName>MIT License</project.licenseName>
     </properties>
 
     <dependencies>
@@ -18,6 +21,23 @@
     </dependencies>
 
     <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>license-maven-plugin</artifactId>
+            <version>2.5.0</version>
+            <configuration>
+                <licenseName>${project.licenseName}</licenseName>
+                <organizationName>${project.organizationName}</organizationName>
+                <inceptionYear>${project.inceptionYear}</inceptionYear>
+                <header>${project.basedir}/LICENSE</header>
+                <includes>
+                    <include>src/main/java/**/*.java</include>
+                </includes>
+            </configuration>
+            <!-- ... rest of plugin config ... -->
+        </plugin>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -29,27 +49,34 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>com.example.Main</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            
-            <!-- Add exec plugin to run Main.java -->
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
                     <mainClass>com.example.Main</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>2.5.0</version>
+                <configuration>
+                    <licenseName>${project.licenseName}</licenseName>
+                    <organizationName>${project.organizationName}</organizationName>
+                    <inceptionYear>${project.inceptionYear}</inceptionYear>
+                    <header>${project.basedir}/LICENSE</header>
+                    <includes>
+                        <include>src/main/java/**/*.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>update-file-header</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
